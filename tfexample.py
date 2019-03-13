@@ -1,6 +1,5 @@
 import tensorflow as tf
 from tensorflow import keras
-import pathlib
 import numpy as np
 
 mnist = tf.keras.datasets.mnist
@@ -16,11 +15,12 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(10, activation=tf.nn.softmax)
 ])
 
-model.summary()
-
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
+model.summary()
+
 model.fit(x_train, y_train, epochs=5,validation_data=(x_train,y_train))
 model.evaluate(x_test, y_test)
 
+model.save('xx.h5')
