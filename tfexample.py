@@ -1,3 +1,6 @@
+import argparse,os,sys
+#from __future__ import absolute_import,division,print_function
+
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -20,7 +23,8 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 model.summary()
 
-model.fit(x_train, y_train, epochs=5,validation_data=(x_train,y_train))
+model.fit(x_train, y_train, epochs=5)
+#tf.nn.dropout()
 model.evaluate(x_test, y_test)
 
-model.save('xx.h5')
+#model.save('xx.h5')
