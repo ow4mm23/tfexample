@@ -30,3 +30,7 @@ model.fit(x_train, y_train, epochs=5)
 # model.summary.histogram()
 model.evaluate(x_test, y_test)
 # model.save('xx.h5')
+
+# visual graph
+# writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
+# writer.close()
