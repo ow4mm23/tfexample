@@ -1,15 +1,15 @@
 # -*- coding:utf-8-*-
-import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorboard
 
 # 读取数据
 mnist = input_data.read_data_sets("./mnist/", one_hot=True)
-print(mnist.train.num_examples)
-print(mnist.validation.num_examples)
-print(mnist.test.num_examples)
+# print(mnist.train.num_examples)
+# print(mnist.validation.num_examples)
+# print(mnist.test.num_examples)
 
 # # 显示图片
 # temp = mnist.train.images[3]
@@ -81,5 +81,5 @@ with tf.Session() as sess:
                                 inputLayer: mnist.test.images, outputLabel: mnist.test.labels})
     print("accuracy on test set:", accuracyValue)
 
-writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
-writer.close()
+# writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
+# writer.close()

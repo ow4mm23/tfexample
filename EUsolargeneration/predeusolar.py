@@ -32,29 +32,30 @@ test_dataset = solar_country.drop(train_dataset.index)
 
 # plot figure to show
 plt.subplot(121)
-plt.plot( train_dataset, '-')
+plt.plot(train_dataset, '-')
 # plt.show()
 
 # create a sequential model
 model = keras.Sequential([
     # keras.layers.LSTM(64, input_shape=[train_dataset.shape[1]]),
-    keras.layers.Dense(64, activation='relu',input_shape=[train_dataset.shape[1]]),
+    keras.layers.Dense(64, activation='relu', input_shape=[
+                       train_dataset.shape[1]]),
     keras.layers.Dense(64, activation='sigmoid'),
     keras.layers.Dense(1)
 ])
 
-model.compile(optimizer='rmsprop',
-              loss='mse', metrics=['mae'])
+model.compile(optimizer='adam',
+              loss='mse', metrics=['accuracy'])
 model.summary()
 
-model.fit(train_dataset, epochs=3, verbose=1, use_multiprocessing=True)
+model.fit(train_dataset, epochs=3, verbose=1, callbacks=[
+          keras.callbacks.TensorBoard(log_dir='./vslogs', write_grads=True)])
 
-# model.evaluate(test_dataset)
-test_pre=model.predict(test_dataset)
+test_pre = model.predict(test_dataset)
 
 plt.subplot(122)
 plt.plot(test_pre)
-plt.legend()
+# plt.legend()
 plt.show()
 
 print('THIS IS END')
