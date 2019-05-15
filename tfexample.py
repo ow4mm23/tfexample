@@ -25,8 +25,9 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 model.summary()
 
-history = model.fit(x_train, y_train, epochs=5, callbacks=[
-                    keras.callbacks.TensorBoard(log_dir='./logs', write_grads=True, write_graph=True)])
+tbcallback = keras.callbacks.TensorBoard(
+    log_dir='./logs', write_grads=True, write_graph=True)
+history = model.fit(x_train, y_train, epochs=5, callbacks=[])
 # tf.nn.dropout()
 # model.summary.histogram()
 model.evaluate(x_test, y_test)

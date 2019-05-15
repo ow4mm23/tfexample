@@ -75,10 +75,10 @@ with tf.Session() as sess:
 
 # test
     corrected = tf.equal(tf.argmax(outputLabel, 1),
-                            tf.argmax(outputLayer, 1))
+                         tf.argmax(outputLayer, 1))
     accuracy = tf.reduce_mean(tf.cast(corrected, tf.float32))
     accuracyValue = sess.run(accuracy, feed_dict={
-                                inputLayer: mnist.test.images, outputLabel: mnist.test.labels})
+        inputLayer: mnist.test.images, outputLabel: mnist.test.labels})
     print("accuracy on test set:", accuracyValue)
 
 # writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
