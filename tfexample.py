@@ -20,10 +20,17 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(10, activation=tf.nn.softmax)
 ])
 
+
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 model.summary()
+
+# gpu growth ontheway
+conf = tf.ConfigProto()
+conf.gpu_options.allow_growth = True
+tf.Session(config=conf)
+# gpu_options = tf.GPUOptions(allow_growth=1)
 
 tbcallback = keras.callbacks.TensorBoard(
     log_dir='./logs', write_grads=True, write_graph=True)
