@@ -20,13 +20,26 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(10, activation=tf.nn.softmax)
 ])
 
+
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 model.summary()
 
-model.fit(x_train, y_train, epochs=5)
+# gpu growth ontheway
+conf = tf.ConfigProto()
+conf.gpu_options.allow_growth = True
+tf.Session(config=conf)
+# gpu_options = tf.GPUOptions(allow_growth=1)
+
+tbcallback = keras.callbacks.TensorBoard(
+    log_dir='./logs', write_grads=True, write_graph=True)
+history = model.fit(x_train, y_train, epochs=5, callbacks=[])
 # tf.nn.dropout()
 # model.summary.histogram()
 model.evaluate(x_test, y_test)
 # model.save('xx.h5')
+
+# visual graph
+# writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
+# writer.close()
