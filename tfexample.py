@@ -7,12 +7,16 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 
+## DO NOT WORK !!!
+# # DISABLE GPU DEVICE
+# os.environ["CUDA_VISIBLE_DEVICES"]=""
+
 mnist = tf.keras.datasets.mnist
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 x_train, x_test = x_train/255.0, x_test/255.0
 
-# with tf.device('/CPU:0'):
+# with tf.device('/CPU:0')
 model = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),
     tf.keras.layers.Dense(512, activation=tf.nn.relu),
@@ -22,15 +26,14 @@ model = tf.keras.models.Sequential([
 
 
 model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+            loss='sparse_categorical_crossentropy',
+            metrics=['accuracy'])
 model.summary()
 
 # gpu growth ontheway
 conf = tf.ConfigProto()
 conf.gpu_options.allow_growth = True
 tf.Session(config=conf)
-# gpu_options = tf.GPUOptions(allow_growth=1)
 
 tbcallback = keras.callbacks.TensorBoard(
     log_dir='./logs', write_grads=True, write_graph=True)

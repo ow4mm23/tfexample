@@ -81,5 +81,7 @@ with tf.Session() as sess:
         inputLayer: mnist.test.images, outputLabel: mnist.test.labels})
     print("accuracy on test set:", accuracyValue)
 
+
+print('THIS IS END')
 # writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
 # writer.close()
