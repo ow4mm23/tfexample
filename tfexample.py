@@ -8,7 +8,7 @@ from tensorflow import keras
 import numpy as np
 
 # DISABLE GPU DEVICE
-os.environ["CUDA_VISIBLE_DEVICES"] = "{}"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "{}"
 
 mnist = tf.keras.datasets.mnist
 
