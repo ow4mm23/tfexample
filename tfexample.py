@@ -13,7 +13,7 @@ import numpy as np
 mnist = tf.keras.datasets.mnist
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
-x_train, x_test = x_train/255.0, x_test/255.0
+x_train, x_test = x_train / 255.0, x_test / 255.0
 
 eps = 5
 
@@ -35,8 +35,9 @@ conf = tf.ConfigProto()
 conf.gpu_options.allow_growth = True
 tf.Session(config=conf)
 
-tbcallback = keras.callbacks.TensorBoard(
-    log_dir='./logs', write_grads=True, write_graph=True)
+tbcallback = keras.callbacks.TensorBoard(log_dir='./logs',
+                                         write_grads=True,
+                                         write_graph=True)
 history = model.fit(x_train, y_train, epochs=eps, callbacks=[])
 # tf.nn.dropout()
 # model.summary.histogram()
@@ -46,3 +47,5 @@ model.evaluate(x_test, y_test)
 # visual graph
 # writer=tf.summary.FileWriter('./logs',tf.get_default_graph())
 # writer.close()
+
+
