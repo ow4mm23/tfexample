@@ -1,56 +1,37 @@
 # coding=utf-8
+import os
 import tensorflow as tf
 
 import tensorflow.keras.backend as K
-from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import Input,Dense
 from tensorflow.keras.models import Model
 
 from sklearn.preprocessing import MinMaxScaler
 
 ## ENABLE EAGER EXECUTION
 tf.enable_eager_execution()
+# DISABLE GPU DEVICE
+os.environ["CUDA_VISIBLE_DEVICES"] = "{}"
 # gpu growth ontheway
 conf = tf.ConfigProto()
 conf.gpu_options.allow_growth = True
 tf.Session(config=conf)
 
-noise=tf.random.normal(shape=[1,32])
-# upperb=tf.ones(shape=noise.shape)
-# re=K.greater(noise,upperb)
-# print(re)
-print(noise)
+def build_gan_model():
+    main_input=Input(shape=(64,),name='main_input')
+    x=Dense(64,activation='sigmoid',name='hidden_1')(main_input)
 
-scaler=MinMaxScaler()
-noi=scaler.fit_transform(noise.numpy())
-print(noi)
+    second_input=Input(shape=(32,),name='second_input')
+    x2=Dense(32,activation='softmax',name='hidden_2')(second_input)
+    # x2=tf.cast(tf.argmax(x2,2),dtype=tf.float32)
+    x2=tf.argmax(x2)
 
+    y=tf.keras.layers.concatenate([x,x2])
 
-input1=Input(shape=(1,32))
+    return Model(inputs=[main_input,second_input],outputs=y)
 
-def modfy_upper_lower(x,bound=(-1,1)):
+gan_model=build_gan_model()
+gan_model.summary()
 
-    lower=tf.ones(shape=(1,1,32))*bound[0]
-    upper=tf.ones(shape=(1,1,32))*bound[1]
-    bol_upbound=K.greater(x,upper)
-    bol_lowbound=K.less(x,lower)
-
-    x=tf.where(bol_lowbound,lower,x)
-    x=tf.where(bol_upbound,upper,x)
-
-    # for i in range(bol_upbound.shape[2]):
-    #     if (bol_upbound[0,0,i]):
-    #         new_left=tf.slice(x,[0,0,0],[1,1,i])
-    #         new_right=tf.slice(x,[0,0,i+1],[1,1,bol_upbound.shape[2]-(i+1)])
-    #         x=tf.concat([new_left,tf.slice(upper,[0,0,i],[1,1,1]),new_right],2)
-            
-    #     if (bol_lowbound[0,0,i]):
-    #         new_left=tf.slice(x,[0,0,0],[1,1,i])
-    #         new_right=tf.slice(x,[0,0,i+1],[1,1,bol_upbound.shape[2]-(i+1)])
-    #         x=tf.concat([new_left,tf.slice(lower,[0,0,i],[1,1,1]),new_right],2)
-            
-    return x
-
-noise=modfy_upper_lower(noise,bound=(0,1))
-print(noise)
 
 print('END')
