@@ -1,6 +1,7 @@
 # coding:utf-8
+from __future__ import absolute_import,division,print_function,unicode_literals
 import os
 import tensorflow as tf
-from tensorflow.python.client import device_lib
+# from tensorflow.python.client import device_lib
 
-print(device_lib.list_local_devices())
+print("# of GPU Available: ",len(tf.config.experimental.list_physical_devices('GPU')))
