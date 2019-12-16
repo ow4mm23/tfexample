@@ -8,7 +8,8 @@ import tensorflow as tf
 import numpy as np
 
 # DISABLE GPU DEVICE
-# os.environ["CUDA_VISIBLE_DEVICES"] = "{}"
+os.environ["CUDA_VISIBLE_DEVICES"] = "{}"
+
 # gpu growth ontheway
 # tf.verison == 1.14
 # conf = tf.ConfigProto()
@@ -31,7 +32,7 @@ mnist = tf.keras.datasets.mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 x_train, x_test = x_train / 255.0, x_test / 255.0
 
-eps = 5
+eps = 50
 
 # with tf.device('/CPU:0'):
 model = tf.keras.models.Sequential([
@@ -46,9 +47,10 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 model.summary()
 
-tbcallback = tf.keras.callbacks.TensorBoard(log_dir='./logs',
-                                            write_grads=True,
-                                            write_graph=True)
+tbcallback = tf.keras.callbacks.TensorBoard(
+    log_dir='./logs',
+    # write_grads=True,
+    write_graph=True)
 history = model.fit(x_train, y_train, epochs=eps, callbacks=[])
 # tf.nn.dropout()
 # model.summary.histogram()
